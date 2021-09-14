@@ -24,6 +24,7 @@ pub struct Universe {
 }
 #[wasm_bindgen]
 impl Universe {
+    #[wasm_bindgen]
     pub fn new() -> Universe {
         let width = 64;
         let height = 64;
@@ -40,6 +41,18 @@ impl Universe {
             height,
             cells
         }
+    }
+    #[wasm_bindgen]
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+    #[wasm_bindgen]
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+    #[wasm_bindgen]
+    pub fn cells(&self) ->  *const Cell {
+        self.cells.as_ptr()
     }
     fn get_index(&self, row: u32, column: u32) -> usize {
         (row * self.width + column) as usize
@@ -59,6 +72,7 @@ impl Universe {
         }
         count
     }
+    #[wasm_bindgen]
     pub fn tick(&mut self) {
         let mut next = self.cells.clone();
         for row in 0..self.height {
@@ -78,8 +92,9 @@ impl Universe {
         }
         self.cells = next;
     }
-    pub fn render(&self) {
-        self.to_string();
+    #[wasm_bindgen]
+    pub fn render(&self)-> String {
+        self.to_string()
     }
 }
 impl fmt::Display for Universe {
